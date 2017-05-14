@@ -1,0 +1,22 @@
+Problem Statements
+
+1. Find the number of students who scored less than 5(50%).
+2. List the name of students who are from Alaska.
+3. How many government collages are there in Alabama?
+4. List the name of students who are from Oregon and persuing BE.
+
+1. grunt> student_details = LOAD 'hdfs://localhost:9000/pig_data/dataset.txt' USING PigStorage(',') as
+(name:chararray,col.undertaken:chararray,dob:chararray,stream:chararray,grade:float,state:chararray,city:chararray);
+group_student_all = Group student_details All
+filter_data = FILTER group_student_all grade<5;
+dump filter_data;
+
+2. from_alaska = FILTER student_details city=='Alaska'
+dump from_alaska
+
+3. govt_coll = FILTER student_details city=='Alabama' and col.undertaken=='government' 
+dump govt_coll
+
+4. list_students = Group student_details All;
+filter_data = FILTER list_students city=='Oregon' and grade=='BE';
+dump filter_data
